@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cashy | Case Study</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b0d12;
+      --panel:#121722;
+      --panel-2:#171e2c;
+      --text:#f5f7fb;
+      --muted:#9eabc2;
+      --line:rgba(255,255,255,.08);
+      --accent:#6ee7ff;
+      --accent-2:#7c5cff;
+      --success:#5ef2a3;
+      --warn:#ffb86b;
+      --shadow:0 20px 70px rgba(0,0,0,.35);
+      --radius:22px;
+      --max:1180px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 20% 0%, rgba(124,92,255,.18), transparent 30%),
+        radial-gradient(circle at 80% 20%, rgba(110,231,255,.14), transparent 28%),
+        linear-gradient(180deg,#090b10 0%,#0b0d12 100%);
+    }
+    .grid-noise:before{
+      content:"";
+      position:fixed; inset:0;
+      pointer-events:none;
+      background-image:linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+      background-size:36px 36px;
+      mask-image:radial-gradient(circle at center, black, transparent 85%);
+      opacity:.35;
+    }
+    .wrap{max-width:var(--max); margin:0 auto; padding:0 24px}
+    .hero{padding:92px 0 48px}
+    .eyebrow{
+      display:inline-flex; gap:10px; align-items:center;
+      padding:10px 14px; border:1px solid var(--line); border-radius:999px;
+      color:var(--accent); font-size:13px; letter-spacing:.08em; text-transform:uppercase;
+      background:rgba(255,255,255,.03); backdrop-filter:blur(10px);
+    }
+    h1,h2,h3{font-family:"Space Grotesk",sans-serif; margin:0}
+    h1{font-size:clamp(42px,7vw,86px); line-height:.96; letter-spacing:-.04em; margin:22px 0 18px}
+    .lead{max-width:760px; color:var(--muted); font-size:18px; line-height:1.7}
+    .hero-grid{display:grid; grid-template-columns:1.2fr .8fr; gap:28px; align-items:end; margin-top:34px}
+    .stat-card,.panel{
+      background:linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.02));
+      border:1px solid var(--line); box-shadow:var(--shadow); border-radius:var(--radius);
+    }
+    .stat-card{padding:26px}
+    .stats{display:grid; grid-template-columns:repeat(4,1fr); gap:14px}
+    .stat-card .label{color:var(--muted); font-size:13px; text-transform:uppercase; letter-spacing:.08em}
+    .stat-card .value{font:700 clamp(28px,4vw,46px)/1 "Space Grotesk",sans-serif; margin-top:14px}
+    .stat-card .sub{margin-top:10px; color:var(--muted); font-size:14px; line-height:1.5}
+    .summary{padding:26px}
+    .summary ul{list-style:none; padding:0; margin:16px 0 0; display:grid; gap:14px}
+    .summary li{display:flex; gap:12px; color:var(--muted); line-height:1.55}
+    .dot{width:10px; height:10px; border-radius:50%; background:linear-gradient(135deg,var(--accent),var(--accent-2)); margin-top:8px; flex:none}
+    section{padding:26px 0}
+    .section-head{display:flex; justify-content:space-between; gap:20px; align-items:end; margin-bottom:18px}
+    .section-head p{max-width:660px; color:var(--muted); margin:0; line-height:1.65}
+    .cards{display:grid; gap:18px}
+    .cards.cols-3{grid-template-columns:repeat(3,1fr)}
+    .cards.cols-2{grid-template-columns:repeat(2,1fr)}
+    .card{padding:24px}
+    .card h3{font-size:24px; margin-bottom:10px}
+    .card p{color:var(--muted); line-height:1.65; margin:0}
+    .pill-row{display:flex; gap:10px; flex-wrap:wrap; margin-top:18px}
+    .pill{padding:10px 12px; border:1px solid var(--line); border-radius:999px; color:#dbe7ff; background:rgba(255,255,255,.03); font-size:14px}
+    .timeline{display:grid; gap:16px}
+    .step{display:grid; grid-template-columns:74px 1fr; gap:18px; padding:20px 22px}
+    .num{font:700 26px/1 "Space Grotesk",sans-serif; color:var(--accent)}
+    .step p{margin:6px 0 0; color:var(--muted); line-height:1.65}
+    .highlight{color:var(--text)}
+    .cta{padding:38px 0 82px}
+    .cta-box{padding:30px; display:grid; grid-template-columns:1.1fr .9fr; gap:24px; align-items:center}
+    .cta-box p{color:var(--muted); margin:10px 0 0; line-height:1.7}
+    .list{display:grid; gap:12px}
+    .list-item{padding:14px 16px; border:1px solid var(--line); border-radius:16px; color:#d9e5fa; background:rgba(255,255,255,.025)}
+    .footer-note{color:#73809a; font-size:13px; margin-top:14px}
+    .badge{display:inline-block; margin-bottom:12px; color:var(--success); font-size:13px; text-transform:uppercase; letter-spacing:.08em}
+    .warn{color:var(--warn)}
+    @media (max-width:980px){
+      .hero-grid,.cta-box,.cards.cols-3,.cards.cols-2,.stats{grid-template-columns:1fr 1fr}
+    }
+    @media (max-width:720px){
+      .hero{padding-top:72px}
+      .hero-grid,.cta-box,.cards.cols-3,.cards.cols-2,.stats{grid-template-columns:1fr}
+      .step{grid-template-columns:1fr}
+      .section-head{display:block}
+      h1{font-size:44px}
+    }
+  </style>
+</head>
+<body class="grid-noise">
+  <div class="wrap hero">
+    <div class="eyebrow">Case Study · AI Employee Operations</div>
+    <h1>From Setup to<br>Execution Engine</h1>
+    <p class="lead">
+      A private case study showing how <strong>Cashy</strong> was deployed as an AI employee to support a growing service business with research, website production, lead data enrichment, meeting prep, workflow design, and day-to-day execution — while keeping client identities and sensitive details private.
+    </p>
+
+    <div class="hero-grid">
+      <div class="stats">
+        <div class="stat-card">
+          <div class="label">Web Assets</div>
+          <div class="value">10+</div>
+          <div class="sub">Landing pages, HTML revisions, and implementation-ready site assets delivered.</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Research Tabs</div>
+          <div class="value">15+</div>
+          <div class="sub">County/practice-area legal research tabs created and loaded into a live sheet.</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Attorney Records</div>
+          <div class="value">100+</div>
+          <div class="sub">Public attorney records gathered, cleaned, enriched, and structured.</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Workflows</div>
+          <div class="value">Built</div>
+          <div class="sub">Voice-note handling, memory capture, reporting, and operating rules documented.</div>
+        </div>
+      </div>
+      <div class="panel summary">
+        <div class="badge">Scope of Work</div>
+        <h2>What got built</h2>
+        <ul>
+          <li><span class="dot"></span><span>AI employee identity, memory, and workflow foundation</span></li>
+          <li><span class="dot"></span><span>Business context capture and operational preferences</span></li>
+          <li><span class="dot"></span><span>Custom website drafts, page revisions, and GHL-ready assets</span></li>
+          <li><span class="dot"></span><span>Attorney market research pipelines with spreadsheet delivery</span></li>
+          <li><span class="dot"></span><span>Meeting briefings and discovery support for client conversations</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Phase 1</div>
+          <h2>Foundation and operating system</h2>
+        </div>
+        <p>
+          First step was not content. It was infrastructure. The AI employee was set up with a defined identity, rules of engagement, memory structure, escalation format, and clear knowledge of team roles, business priorities, and communication preferences.
+        </p>
+      </div>
+      <div class="cards cols-3">
+        <div class="panel card">
+          <h3>Identity</h3>
+          <p>Built a distinct assistant identity with a defined tone, work style, and execution standard so output stayed consistent across tasks.</p>
+          <div class="pill-row">
+            <span class="pill">Persona setup</span>
+            <span class="pill">Voice & style</span>
+          </div>
+        </div>
+        <div class="panel card">
+          <h3>Memory</h3>
+          <p>Captured durable context: business priorities, team structure, preferred operating behaviors, and project-specific notes for continuity.</p>
+          <div class="pill-row">
+            <span class="pill">Persistent context</span>
+            <span class="pill">Team mapping</span>
+          </div>
+        </div>
+        <div class="panel card">
+          <h3>Workflow</h3>
+          <p>Documented rules for handling routine work, escalation, and voice messages so execution became repeatable instead of improvised.</p>
+          <div class="pill-row">
+            <span class="pill">SOP logic</span>
+            <span class="pill">Execution rules</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Phase 2</div>
+          <h2>Web and design execution</h2>
+        </div>
+        <p>
+          Multiple web properties were drafted, refined, and reformatted for different publishing environments. This included both planning work and implementation-ready HTML output.
+        </p>
+      </div>
+      <div class="cards cols-2">
+        <div class="panel card">
+          <h3>Primary business site planning</h3>
+          <p>Produced a complete site outline, service positioning, page architecture, and then converted concepts into HTML and GoHighLevel-compatible implementation assets.</p>
+          <div class="pill-row">
+            <span class="pill">Site outline</span>
+            <span class="pill">Single-page builds</span>
+            <span class="pill">GHL templates</span>
+          </div>
+        </div>
+        <div class="panel card">
+          <h3>Brand/event site iterations</h3>
+          <p>Built and revised an event-style promotional site through multiple rounds: layout fixes, mobile adjustments, audio player integration, card restructuring, typography changes, and content updates.</p>
+          <div class="pill-row">
+            <span class="pill">HTML revisions</span>
+            <span class="pill">Mobile fixes</span>
+            <span class="pill">Media integration</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Phase 3</div>
+          <h2>Research operations and lead intelligence</h2>
+        </div>
+        <p>
+          A major workstream was building structured legal-market datasets by county and practice area. The process included broad collection, second-pass cleaning, public directory verification, bar cross-reference enrichment, and Google Sheet delivery.
+        </p>
+      </div>
+      <div class="cards cols-3">
+        <div class="panel card">
+          <h3>Data collection</h3>
+          <p>Built attorney lists by geography and practice area using public sources, then structured the data into spreadsheet-ready formats.</p>
+        </div>
+        <div class="panel card">
+          <h3>Enrichment</h3>
+          <p>Cross-referenced public professional information, including bar details where available, and appended professional contact fields conservatively.</p>
+        </div>
+        <div class="panel card">
+          <h3>Delivery</h3>
+          <p>Pushed cleaned outputs into a live Google Sheet with named tabs, frozen headers, filters, and downloadable CSV backups.</p>
+        </div>
+      </div>
+      <div class="panel card" style="margin-top:18px">
+        <h3>Practice-area and county sheet buildout</h3>
+        <p>
+          Delivered multiple sheet tabs and CSV exports spanning personal injury, estate planning, probate, family law, immigration, bankruptcy, and multi-county immigration lists. Where first-pass coverage was thin, broader second passes were run to improve realism and usefulness.
+        </p>
+        <div class="pill-row">
+          <span class="pill">Palm Beach</span>
+          <span class="pill">Broward</span>
+          <span class="pill">Martin</span>
+          <span class="pill">Miami-Dade</span>
+          <span class="pill">Monroe</span>
+          <span class="pill">Attorney-level rows</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Phase 4</div>
+          <h2>Meeting prep and strategic support</h2>
+        </div>
+        <p>
+          Beyond raw research, the role expanded into preparing concise briefings for business meetings — combining public profile research with operational pain-point analysis and suggested positioning.
+        </p>
+      </div>
+      <div class="cards cols-2">
+        <div class="panel card">
+          <h3>Attorney / firm briefings</h3>
+          <p>Prepared compact pre-meeting dossiers covering public profile, likely operational structure, administrative pain points, scheduling issues, and opportunities for automation or VA support.</p>
+        </div>
+        <div class="panel card">
+          <h3>Discovery support</h3>
+          <p>Generated conversation talking points, discovery questions, and suggested positioning to keep meetings practical and focused on efficiency wins.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">How it worked</div>
+          <h2>Execution model</h2>
+        </div>
+        <p>
+          The engagement blended direct in-session execution for quick tasks with background runs for heavier research. Outputs were then packaged into attachments, sheets, or ready-to-use HTML deliverables.
+        </p>
+      </div>
+      <div class="timeline">
+        <div class="panel step">
+          <div class="num">01</div>
+          <div>
+            <h3>Capture context</h3>
+            <p>Define business goals, team roles, communication preferences, and project priorities before trying to optimize anything.</p>
+          </div>
+        </div>
+        <div class="panel step">
+          <div class="num">02</div>
+          <div>
+            <h3>Execute fast</h3>
+            <p>Ship first versions quickly: outlines, HTML drafts, research sheets, and briefings. Then refine with feedback instead of over-planning upfront.</p>
+          </div>
+        </div>
+        <div class="panel step">
+          <div class="num">03</div>
+          <div>
+            <h3>Enrich and structure</h3>
+            <p>Where surface-level data wasn’t enough, run a second pass: dedupe, enrich, verify public info, and organize into decision-ready formats.</p>
+          </div>
+        </div>
+        <div class="panel step">
+          <div class="num">04</div>
+          <div>
+            <h3>Document the operating rules</h3>
+            <p>Convert repeated preferences into workflow rules — including voice-note handling, memory, and reporting — so the system gets more useful over time.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="wrap">
+      <div class="panel cta-box">
+        <div>
+          <div class="eyebrow">Outcome</div>
+          <h2>What this case study proves</h2>
+          <p>
+            An AI employee can do more than answer questions. With the right operating structure, it can support research, web production, spreadsheet enrichment, meeting preparation, workflow design, and day-to-day execution in a way that compounds over time.
+          </p>
+          <p class="footer-note">This version intentionally excludes client names, private contact details, credentials, and privileged business information.</p>
+        </div>
+        <div class="list">
+          <div class="list-item">Website builds and iterative front-end revisions</div>
+          <div class="list-item">Attorney research pipelines and Google Sheet delivery</div>
+          <div class="list-item">Meeting briefings and discovery support</div>
+          <div class="list-item">Voice-note workflow handling and operational memory</div>
+          <div class="list-item">Execution-first support for a scaling service business</div>
+        </div>
+      </div>
+      <div class="footer-note warn">Confidential names and privileged client details removed by design.</div>
+    </div>
+  </section>
+</body>
+</html>
